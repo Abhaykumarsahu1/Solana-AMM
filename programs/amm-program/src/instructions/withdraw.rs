@@ -124,7 +124,7 @@ impl<'info> Withdraw<'info> {
 
         burn(
             CpiContext::new(
-                self.token_program.to_account_info(),
+                self.token_program.key(),
                 cpi_accounts,
             ),
             amount,
@@ -157,7 +157,7 @@ impl<'info> Withdraw<'info> {
 
         transfer(
             CpiContext::new_with_signer(
-                self.token_program.to_account_info(),
+                self.token_program.key(),
                 Transfer {
                     from,
                     to,

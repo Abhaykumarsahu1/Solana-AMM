@@ -15,8 +15,8 @@ declare_id!("3LG67VXRN5xibaJdXNfzW1RBqTdQr6nF2NMGtuHiYexF");
 pub mod amm_program {
     use super::*;
 
-    pub fn initialize(ctx: Context<Initialize>,seed: u64, fee:u64) -> Result<()> {
-        crate::instructions::initialize::handle_initialize(ctx, seed, fee)
+    pub fn initialize(ctx: Context<Initialize>,seed: u64, fee:u16, protocol_fee: u16) -> Result<()> {
+        crate::instructions::initialize::handle_initialize(ctx, seed, fee, protocol_fee)
     }
 
     pub fn deposit(ctx: Context<Deposit>,amount: u64,max_x: u64,max_y: u64,) -> Result<()> {
@@ -30,5 +30,5 @@ pub mod amm_program {
     pub fn withdraw(ctx: Context<Withdraw>, amount: u64, min_x: u64, min_y: u64 ) -> Result<()> {
     ctx.accounts.withdraw(amount, min_x, min_y)
     }
-    
+
 }

@@ -18,9 +18,12 @@ pub mod amm_program {
     pub fn initialize(ctx: Context<Initialize>,seed: u64, fee:u64) -> Result<()> {
         crate::instructions::initialize::handle_initialize(ctx, seed, fee)
     }
-    
+
     pub fn deposit(ctx: Context<Deposit>,amount: u64,max_x: u64,max_y: u64,) -> Result<()> {
     crate::instructions::deposit::handle_deposit(ctx,amount,max_x,max_y)
     }
     
+    pub fn swap(ctx: Context<Swap>,is_x: bool, amount: u64, min: u64,) -> Result<()> {
+    ctx.accounts.swap(is_x, amount, min)
+    }
 }

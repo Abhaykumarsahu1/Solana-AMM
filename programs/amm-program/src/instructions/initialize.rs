@@ -7,7 +7,7 @@ use crate::AmmConfig;
 
 #[derive(Accounts)]
 #[instruction(seed:u64)]
-struct initialize<'info>{
+pub struct Initialize<'info>{
 
     #[account(mut)] //lamports deduction
     pub payer : Signer<'info>, //i am the one who will create the amm pool
@@ -46,7 +46,7 @@ struct initialize<'info>{
         init,
         payer = payer,
         space = 8 + AmmConfig::INIT_SPACE,
-        seeds = [b"amm_config", payer.key().as_ref()],
+        seeds = [b"amm_config", seed.to_le_bytes().as_ref()],
         bump
     )]
     pub config : Account<'info, AmmConfig>, //initializing the config/metadata for AMMpool
@@ -57,9 +57,9 @@ struct initialize<'info>{
 }
 
 pub fn handle_intialize(
-    ctx: Context<initialize>,
+    ctx: Context<Initialize>,
     seed:u64,
-    fee: u16,
+    fee: u64,
 )->Result<()>{
 
     let config = &mut ctx.accounts.config;//targeting the config accounts present in the struct intialize
